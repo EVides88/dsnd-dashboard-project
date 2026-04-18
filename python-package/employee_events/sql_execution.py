@@ -7,10 +7,34 @@ import pandas as pd
 # that points to the absolute path for the `employee_events.db` file
 #### YOUR CODE HERE
 
+import sqlite3
+from pathlib import Path
+from functools import wraps
+
+db_path = Path(__file__).resolve().parent / "employee_events.db"
+
+def execute_sql(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        query = func(*args, **kwargs)
+
+        cursor.execute(query)
+        results = cursor.fetchall()
+
+        conn.close()
+
+        return results
+
+    return wrapper
 
 # OPTION 1: MIXIN
 # Define a class called `QueryMixin`
 class QueryMixin:
+    
+    pass
     
     # Define a method named `pandas_query`
     # that receives an sql query as a string

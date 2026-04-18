@@ -12,6 +12,6 @@ class BaseComponent:
 
     def __call__(self, entity_id, model):
 
-        component = self.build_component(entity_id, model)
+        component = self.build_component(model, entity_id)
 
         return self.outer_div(component)

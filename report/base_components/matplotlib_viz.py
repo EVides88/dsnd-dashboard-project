@@ -43,21 +43,24 @@ class MatplotlibViz(BaseComponent):
 
     @matplotlib2fasthtml
     def build_component(self, entity_id, model):
-        return self.visualization(entity_id, model)
-    
+
+        if hasattr(entity_id, "event_counts"):
+            model, entity_id = entity_id, model
+
+        return self.visualization(entity_id, model)        
     
     def visualization(self, entity_id, model):
         pass
 
-    def set_axis_styling(self, ax, bordercolor='white', fontcolor='white'):
+    def set_axis_styling(self, ax, border_color='white', font_color='white'):
         
-        ax.title.set_color(fontcolor)
-        ax.xaxis.label.set_color(fontcolor)
-        ax.yaxis.label.set_color(fontcolor)
+        ax.title.set_color(font_color)
+        ax.xaxis.label.set_color(font_color)
+        ax.yaxis.label.set_color(font_color)
 
-        ax.tick_params(color=bordercolor, labelcolor=fontcolor)
+        ax.tick_params(color=border_color, labelcolor=font_color)
         for spine in ax.spines.values():
-            spine.set_edgecolor(bordercolor)
+            spine.set_edgecolor(border_color)
 
         for line in ax.get_lines():
             line.set_linewidth(4)
